@@ -34,9 +34,8 @@ func (authServer) Login(_ context.Context, in *proto.LoginRequest) (*proto.AuthR
 
 }
 
-var server authServer
 
-func (authServer) SignUp(_ context.Context, in *proto.SignUpRequest) (*proto.AuthResponse, error) {
+func (server authServer) SignUp(_ context.Context, in *proto.SignUpRequest) (*proto.AuthResponse, error) {
 	userName, email, password := in.GetUserName(), in.GetEmail(), in.GetPassword()
 	match, _ := regexp.MatchString("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", email)
 	if len(userName) < 4 || len(userName) > 20 ||
@@ -93,6 +92,13 @@ func (authServer) EmailUsed(_ context.Context, in *proto.EmailUsedRequest) (*pro
 	global.DB.Collection("user").FindOne(ctx, bson.M{"email": email}).Decode(&result)
 	return &proto.UsedResponse{Used: result != global.NilUser}, nil
 }
+
+func (authServer) AuthUser(_ context.Context, in *proto.AuthUserRequest) (*proto.AuthUserResponse, error) {
+	token := in.GetToken()
+	user := global.UserFromToken(token)
+	return &proto.AuthUserResponse{ID: user.ID.Hex(), UserName: user.UserName, Email: user.Email}, nil
+}
+
 func main() {
 	server := grpc.NewServer()
 	proto.RegisterAuthServiceServer(server, authServer{})

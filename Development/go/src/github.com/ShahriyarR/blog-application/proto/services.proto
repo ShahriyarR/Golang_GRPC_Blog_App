@@ -29,9 +29,20 @@ message UsedResponse {
     bool Used = 1;
 }
 
+message AuthUserRequest {
+    string Token = 1;
+}
+
+message AuthUserResponse {
+    string ID = 1;
+    string UserName = 2;
+    string Email = 3;
+}
+
 service AuthService {
     rpc Login(LoginRequest) returns (AuthResponse);
     rpc SignUp(SignUpRequest) returns (AuthResponse);
     rpc UserNameUsed(UserNameUsedRequest) returns (UsedResponse);
     rpc EmailUsed(EmailUsedRequest) returns (UsedResponse);
+    rpc AuthUser(AuthUserRequest) returns (AuthUserResponse);
 }
