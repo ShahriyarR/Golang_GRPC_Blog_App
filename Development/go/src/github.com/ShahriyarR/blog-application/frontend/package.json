@@ -10,7 +10,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "sass": "^1.26.10",
-    "navigo": "^7.1.2"
+    "navigo": "^7.1.2",
+    "sass": "^1.26.10"
+  },
+  "dependencies": {
+    "google-protobuf": "^4.0.0-rc.2",
+    "grpc-web": "^1.2.0"
   }
 }

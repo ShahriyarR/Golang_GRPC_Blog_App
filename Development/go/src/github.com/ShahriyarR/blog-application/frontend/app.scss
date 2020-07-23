@@ -27,4 +27,22 @@ div.login-div {
       border: 2px solid rgba(25, 174, 255, 40%);
     }
   }
+
+  label.input-label {
+    display: block;
+    margin-top: 20px;
+  }
+
+  button {
+    cursor: pointer;
+    padding: 5px 35px;
+    margin: 10px auto;
+    display: block;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(25, 87, 255);
+    color: white;
+    font-weight: bold;
+    font-size: 14pt;
+  }
 }
